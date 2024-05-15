@@ -6,7 +6,7 @@ import java.util.Scanner;
 * */
 public class Task1 {
     public static void main(String[] args) {
-        System.out.println("Lab3 Task1");
+        System.out.println("Lab3 Task2");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your text line:");
         String inputLine = scanner.nextLine();
