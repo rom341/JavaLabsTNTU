@@ -38,7 +38,6 @@ public class MainForm extends JFrame {
             }
 
             contentPanel.setCRUDMode(crudMode);
-            queryBuilder.setSelectedCRUD(crudMode);
         });
         queryTextField = new QueryTextField();
         contentPanel = new ContentPanel();

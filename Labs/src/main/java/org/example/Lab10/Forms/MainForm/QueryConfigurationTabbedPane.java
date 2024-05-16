@@ -1,9 +1,15 @@
 package org.example.Lab10.Forms.MainForm;
 
+import org.example.Lab10.Data.CRUDMode;
+import org.example.Lab10.Data.Models.*;
+import org.example.Lab10.Data.Models.Timer;
+import org.example.Lab10.Data.QueryBuilder;
+import org.example.Lab10.Data.QueryCreationListener;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class QueryConfigurationTabbedPane extends JTabbedPane {
+public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCreationListener {
     private JPanel serviceSelectPanel;
     private JPanel roomSelectPanel;
     private JPanel usersSelectPanel;
@@ -13,7 +19,14 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
     private JPanel chatSelectPanel;
     private JPanel messageSelectPanel;
 
-    public QueryConfigurationTabbedPane(){
+    private JTextField textFieldLabel;
+    private QueryBuilder queryBuilder;
+    private CRUDMode crudMode;
+
+    public QueryConfigurationTabbedPane(JTextField queryOutput){
+        crudMode = CRUDMode.READ;
+        queryBuilder = new QueryBuilder();
+        textFieldLabel = queryOutput;
         initPanels();
 
         add("Service", serviceSelectPanel);
@@ -25,17 +38,27 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         add("Chat", chatSelectPanel);
         add("Message", messageSelectPanel);
     }
+
     private void initPanels(){
-        serviceSelectPanel = createSelectorServicePanel();
-        roomSelectPanel = createSelectorRoomPanel();
-        usersSelectPanel = createSelectorUsersPanel();
-        statusSelectPanel = createSelectorStatusPanel();
-        roleSelectPanel = createSelectorRolePanel();
-        timerSelectPanel = createSelectorTimerPanel();
-        chatSelectPanel = createSelectorChatPanel();
-        messageSelectPanel = createSelectorMessagePanel();
+        serviceSelectPanel = createServicePanel();
+        roomSelectPanel = createRoomPanel();
+        usersSelectPanel = createUsersPanel();
+        statusSelectPanel = createStatusPanel();
+        roleSelectPanel = createRolePanel();
+        timerSelectPanel = createTimerPanel();
+        chatSelectPanel = createChatPanel();
+        messageSelectPanel = createMessagePanel();
     }
-    private JPanel createSelectorServicePanel() {
+
+    public CRUDMode getCrudMode() {
+        return crudMode;
+    }
+
+    public void setCrudMode(CRUDMode crudMode) {
+        this.crudMode = crudMode;
+    }
+
+    private JPanel createServicePanel() {
         JPanel servicePanel = new JPanel(new BorderLayout());
 
         JPanel innerPanel = new JPanel();
@@ -43,11 +66,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         JButton execButton = new JButton();
         execButton.setText("Create query");
         innerPanel.add(execButton);
-
-        JTextField textFieldLabel = new JTextField();
-        textFieldLabel.setPreferredSize(new Dimension(850, 30));
-        textFieldLabel.setEditable(false);
-        innerPanel.add(textFieldLabel);
 
         JPanel inputPanel = new JPanel();
         servicePanel.add(inputPanel, BorderLayout.CENTER);
@@ -58,16 +76,20 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         inputPanel.add(urlLabel);
         inputPanel.add(urlTF);
 
-        JLabel localLabel = new JLabel("Localization:");
-        JTextField localTF = new JTextField();
-        localTF.setPreferredSize(new Dimension(300, 30));
-        inputPanel.add(localLabel);
-        inputPanel.add(localTF);
+        JComboBox<String> localizationComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
+        inputPanel.add(localizationComboBox);
+
+        execButton.addActionListener(e -> {
+            Service service = new Service();
+            service.setURL(urlTF.getText().trim());
+            service.setLocalization((String) localizationComboBox.getSelectedItem());
+            onQueryCreate(service);
+        });
 
         return servicePanel;
     }
 
-    private JPanel createSelectorRoomPanel() {
+    private JPanel createRoomPanel() {
         JPanel roomPanel = new JPanel(new BorderLayout());
 
         JPanel innerPanel = new JPanel();
@@ -75,11 +97,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         JButton execButton = new JButton();
         execButton.setText("Create query");
         innerPanel.add(execButton);
-
-        JTextField textFieldLabel = new JTextField();
-        textFieldLabel.setPreferredSize(new Dimension(850, 30));
-        textFieldLabel.setEditable(false);
-        innerPanel.add(textFieldLabel);
 
         JPanel inputPanel = new JPanel();
         roomPanel.add(inputPanel, BorderLayout.CENTER);
@@ -90,11 +107,8 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         inputPanel.add(ownerLabel);
         inputPanel.add(ownerTF);
 
-        JLabel gameStageLabel = new JLabel("Game Stage:");
-        JTextField gameStageTF = new JTextField();
-        gameStageTF.setPreferredSize(new Dimension(300, 30));
-        inputPanel.add(gameStageLabel);
-        inputPanel.add(gameStageTF);
+        JComboBox<String> gameStageComboBox = new JComboBox<>(new String[]{"Morning", "Midday", "Evening", "Night"});
+        inputPanel.add(gameStageComboBox);
 
         JLabel timerLabel = new JLabel("Timer:");
         JTextField timerTF = new JTextField();
@@ -108,10 +122,23 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         inputPanel.add(chatLabel);
         inputPanel.add(chatTF);
 
+        execButton.addActionListener(e -> {
+            Room room = new Room();
+            try {
+                room.setOwner(Long.parseLong(ownerTF.getText().trim()));
+                room.setGameStage((String) gameStageComboBox.getSelectedItem());
+                room.setTimer(Long.parseLong(timerTF.getText().trim()));
+                room.setChat(Long.parseLong(chatTF.getText().trim()));
+                onQueryCreate(room);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter numeric values.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         return roomPanel;
     }
 
-    private JPanel createSelectorUsersPanel() {
+    private JPanel createUsersPanel() {
         JPanel usersPanel = new JPanel(new BorderLayout());
 
         JPanel innerPanel = new JPanel();
@@ -119,11 +146,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         JButton execButton = new JButton();
         execButton.setText("Create query");
         innerPanel.add(execButton);
-
-        JTextField textFieldLabel = new JTextField();
-        textFieldLabel.setPreferredSize(new Dimension(850, 30));
-        textFieldLabel.setEditable(false);
-        innerPanel.add(textFieldLabel);
 
         JPanel inputPanel = new JPanel();
         usersPanel.add(inputPanel, BorderLayout.CENTER);
@@ -152,10 +174,23 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         inputPanel.add(roleLabel);
         inputPanel.add(roleTF);
 
+        execButton.addActionListener(e -> {
+            User user = new User();
+            try {
+                user.setLogin(loginTF.getText().trim());
+                user.setName(nameTF.getText().trim());
+                user.setStatus(Long.parseLong(statusTF.getText().trim()));
+                user.setRole(Long.parseLong(roleTF.getText().trim()));
+                onQueryCreate(user);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter numeric values.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         return usersPanel;
     }
 
-    private JPanel createSelectorStatusPanel() {
+    private JPanel createStatusPanel() {
         JPanel statusPanel = new JPanel(new BorderLayout());
 
         JPanel innerPanel = new JPanel();
@@ -164,24 +199,22 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         execButton.setText("Create query");
         innerPanel.add(execButton);
 
-        JTextField textFieldLabel = new JTextField("");
-        textFieldLabel.setPreferredSize(new Dimension(850, 30));
-        textFieldLabel.setEditable(false);
-        innerPanel.add(textFieldLabel);
-
         JPanel inputPanel = new JPanel();
         statusPanel.add(inputPanel, BorderLayout.CENTER);
 
-        JLabel isAliveLabel = new JLabel("Is Alive:");
-        JTextField isAliveTF = new JTextField();
-        isAliveTF.setPreferredSize(new Dimension(300, 30));
-        inputPanel.add(isAliveLabel);
-        inputPanel.add(isAliveTF);
+        JCheckBox isAliveCheckBox = new JCheckBox();
+        inputPanel.add(isAliveCheckBox);
+
+        execButton.addActionListener(e -> {
+            Status status = new Status();
+            status.setAlive(isAliveCheckBox.isSelected());
+            onQueryCreate(status);
+        });
 
         return statusPanel;
     }
 
-    private JPanel createSelectorRolePanel() {
+    private JPanel createRolePanel() {
         JPanel rolePanel = new JPanel(new BorderLayout());
 
         JPanel innerPanel = new JPanel();
@@ -189,11 +222,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         JButton execButton = new JButton();
         execButton.setText("Create query");
         innerPanel.add(execButton);
-
-        JTextField textFieldLabel = new JTextField("");
-        textFieldLabel.setPreferredSize(new Dimension(850, 30));
-        textFieldLabel.setEditable(false);
-        innerPanel.add(textFieldLabel);
 
         JPanel inputPanel = new JPanel();
         rolePanel.add(inputPanel, BorderLayout.CENTER);
@@ -228,10 +256,22 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         inputPanel.add(winConditionLabel);
         inputPanel.add(winConditionTF);
 
+        execButton.addActionListener(e -> {
+            Role role = new Role();
+            try {
+                role.setHealth(Short.parseShort(healthTF.getText().trim()));
+                role.setDamage(Short.parseShort(damageTF.getText().trim()));
+                // Set other fields
+                onQueryCreate(role);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter numeric values.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         return rolePanel;
     }
 
-    private JPanel createSelectorTimerPanel() {
+    private JPanel createTimerPanel() {
         JPanel timerPanel = new JPanel(new BorderLayout());
 
         JPanel innerPanel = new JPanel();
@@ -239,11 +279,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         JButton execButton = new JButton();
         execButton.setText("Create query");
         innerPanel.add(execButton);
-
-        JTextField textFieldLabel = new JTextField("");
-        textFieldLabel.setPreferredSize(new Dimension(850, 30));
-        textFieldLabel.setEditable(false);
-        innerPanel.add(textFieldLabel);
 
         JPanel inputPanel = new JPanel();
         timerPanel.add(inputPanel, BorderLayout.CENTER);
@@ -260,10 +295,21 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         inputPanel.add(currentTimeLabel);
         inputPanel.add(currentTimeTF);
 
+        execButton.addActionListener(e -> {
+            Timer timer = new Timer();
+            try {
+                timer.setTriggerTime(Long.parseLong(triggerTimeTF.getText().trim()));
+                timer.setCurrentTime(Long.parseLong(currentTimeTF.getText().trim()));
+                onQueryCreate(timer);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter numeric values.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         return timerPanel;
     }
 
-    private JPanel createSelectorChatPanel() {
+    private JPanel createChatPanel() {
         JPanel chatPanel = new JPanel(new BorderLayout());
 
         JPanel innerPanel = new JPanel();
@@ -272,15 +318,15 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         execButton.setText("Create query");
         innerPanel.add(execButton);
 
-        JTextField textFieldLabel = new JTextField("");
-        textFieldLabel.setPreferredSize(new Dimension(850, 30));
-        textFieldLabel.setEditable(false);
-        innerPanel.add(textFieldLabel);
+        execButton.addActionListener(e -> {
+            Chat chat = new Chat();
+            onQueryCreate(chat);
+        });
 
         return chatPanel;
     }
 
-    private JPanel createSelectorMessagePanel() {
+    private JPanel createMessagePanel() {
         JPanel messagePanel = new JPanel(new BorderLayout());
 
         JPanel innerPanel = new JPanel();
@@ -288,11 +334,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         JButton execButton = new JButton();
         execButton.setText("Create query");
         innerPanel.add(execButton);
-
-        JTextField textFieldLabel = new JTextField();
-        textFieldLabel.setPreferredSize(new Dimension(850, 30));
-        textFieldLabel.setEditable(false);
-        innerPanel.add(textFieldLabel);
 
         JPanel inputPanel = new JPanel();
         messagePanel.add(inputPanel, BorderLayout.CENTER);
@@ -315,6 +356,78 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         inputPanel.add(messageTextLabel);
         inputPanel.add(messageTextTF);
 
+        execButton.addActionListener(e -> {
+            Message message = new Message();
+            try {
+                message.setSender(Long.parseLong(senderTF.getText().trim()));
+                message.setSendTime(Long.parseLong(sendTimeTF.getText().trim()));
+                message.setMessageText(messageTextTF.getText().trim());
+                onQueryCreate(message);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter numeric values.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
         return messagePanel;
+    }
+
+    @Override
+    public void onQueryCreate(Service service) {
+        textFieldLabel.setText(queryBuilder.buildQuery(service, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(Room room) {
+        textFieldLabel.setText(queryBuilder.buildQuery(room, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(User user) {
+        textFieldLabel.setText(queryBuilder.buildQuery(user, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(Chat chat) {
+        textFieldLabel.setText(queryBuilder.buildQuery(chat, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(ChatToMessageConnection CtM) {
+        textFieldLabel.setText(queryBuilder.buildQuery(CtM, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(ChatToRoleConnection CtR) {
+        textFieldLabel.setText(queryBuilder.buildQuery(CtR, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(Message message) {
+        textFieldLabel.setText(queryBuilder.buildQuery(message, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(Role role) {
+        textFieldLabel.setText(queryBuilder.buildQuery(role, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(RoomToUserConnection RtU) {
+        textFieldLabel.setText(queryBuilder.buildQuery(RtU, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(ServiceToRoomConnection StR) {
+        textFieldLabel.setText(queryBuilder.buildQuery(StR, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(Status status) {
+        textFieldLabel.setText(queryBuilder.buildQuery(status, crudMode));
+    }
+
+    @Override
+    public void onQueryCreate(Timer timer) {
+        textFieldLabel.setText(queryBuilder.buildQuery(timer, crudMode));
     }
 }
