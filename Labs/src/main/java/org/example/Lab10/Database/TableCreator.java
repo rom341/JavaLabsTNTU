@@ -30,11 +30,6 @@ public class TableCreator {
 
     public void createAllTablesIfNotExists() {
         String[] createTableQueries = {
-                "CREATE TABLE Service (" +
-                        "ID INT NOT NULL Primary Key," +
-                        "URL TEXT NOT NULL," +
-                        "Localization VARCHAR(10) NOT NULL" +
-                        ")",
 
                 "CREATE TABLE Room (" +
                         "ID BIGINT PRIMARY KEY," +

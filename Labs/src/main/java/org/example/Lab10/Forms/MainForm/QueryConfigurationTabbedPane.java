@@ -202,7 +202,9 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         JPanel inputPanel = new JPanel();
         statusPanel.add(inputPanel, BorderLayout.CENTER);
 
+        JLabel aliveLabel = new JLabel("Is Alive: ");
         JCheckBox isAliveCheckBox = new JCheckBox();
+        inputPanel.add(aliveLabel);
         inputPanel.add(isAliveCheckBox);
 
         execButton.addActionListener(e -> {

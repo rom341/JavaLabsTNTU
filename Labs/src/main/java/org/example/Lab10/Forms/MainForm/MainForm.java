@@ -5,7 +5,12 @@ import org.example.Lab10.Data.QueryBuilder;
 import org.example.Lab10.Database.SQLProcessor;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 
 public class MainForm extends JFrame {
     private SQLProcessor sqlProcessor;
@@ -41,7 +46,37 @@ public class MainForm extends JFrame {
         });
         queryTextField = new QueryTextField();
         contentPanel = new ContentPanel();
-        executeButton = new ExecuteButton(e -> {});
+        executeButton = new ExecuteButton(e -> {
+            try {
+                String query = contentPanel.getQuery();
+                ResultSet result;
+
+                if (contentPanel.getCrudMode() == CRUDMode.READ) {
+                    result = sqlProcessor.executeQuery(query);
+                    DefaultTableModel tableModel = new DefaultTableModel();
+
+                    ResultSetMetaData metaData = result.getMetaData();
+                    int columnCount = metaData.getColumnCount();
+                    for (int column = 1; column <= columnCount; column++) {
+                        tableModel.addColumn(metaData.getColumnName(column));
+                    }
+
+                    while (result.next()) {
+                        Object[] row = new Object[columnCount];
+                        for (int column = 1; column <= columnCount; column++) {
+                            row[column - 1] = result.getObject(column);
+                        }
+                        tableModel.addRow(row);
+                    }
+
+                    contentPanel.setTableModel(tableModel);
+                    }
+                else
+                    sqlProcessor.executeUpdate(query);
+                } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
     private void addFormContent(){
         setLayout(BorderLayout);
@@ -51,6 +86,6 @@ public class MainForm extends JFrame {
         add(executeButton, java.awt.BorderLayout.SOUTH);
     }
     private void configureForm(){
-        setSize(1000, 700);
+        setSize(1000, 800);
     }
 }
