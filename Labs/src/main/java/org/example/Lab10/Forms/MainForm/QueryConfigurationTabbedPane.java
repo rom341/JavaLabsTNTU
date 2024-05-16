@@ -16,7 +16,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
     private JPanel statusSelectPanel;
     private JPanel roleSelectPanel;
     private JPanel timerSelectPanel;
-    private JPanel chatSelectPanel;
     private JPanel messageSelectPanel;
 
     private JTextField textFieldLabel;
@@ -35,7 +34,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         add("Status", statusSelectPanel);
         add("Role", roleSelectPanel);
         add("Timer", timerSelectPanel);
-        add("Chat", chatSelectPanel);
         add("Message", messageSelectPanel);
     }
 
@@ -46,7 +44,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         statusSelectPanel = createStatusPanel();
         roleSelectPanel = createRolePanel();
         timerSelectPanel = createTimerPanel();
-        chatSelectPanel = createChatPanel();
         messageSelectPanel = createMessagePanel();
     }
 
@@ -309,23 +306,6 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         });
 
         return timerPanel;
-    }
-
-    private JPanel createChatPanel() {
-        JPanel chatPanel = new JPanel(new BorderLayout());
-
-        JPanel innerPanel = new JPanel();
-        chatPanel.add(innerPanel, BorderLayout.NORTH);
-        JButton execButton = new JButton();
-        execButton.setText("Create query");
-        innerPanel.add(execButton);
-
-        execButton.addActionListener(e -> {
-            Chat chat = new Chat();
-            onQueryCreate(chat);
-        });
-
-        return chatPanel;
     }
 
     private JPanel createMessagePanel() {

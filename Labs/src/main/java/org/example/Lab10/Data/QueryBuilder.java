@@ -46,19 +46,19 @@ public class QueryBuilder {
         if (model instanceof Service) {
             return "SELECT * FROM Service " + buildWhereQuery(model);
         } else if (model instanceof Room) {
-            return "SELECT * FROM Room" + buildWhereQuery(model);
+            return "SELECT * FROM Room " + buildWhereQuery(model);
         } else if (model instanceof User) {
-            return "SELECT * FROM Users" + buildWhereQuery(model);
+            return "SELECT * FROM Users " + buildWhereQuery(model);
         } else if (model instanceof Status) {
-            return "SELECT * FROM Status" + buildWhereQuery(model);
+            return "SELECT * FROM Status " + buildWhereQuery(model);
         } else if (model instanceof Role) {
-            return "SELECT * FROM Role" + buildWhereQuery(model);
+            return "SELECT * FROM Role " + buildWhereQuery(model);
         } else if (model instanceof Timer) {
-            return "SELECT * FROM Timer" + buildWhereQuery(model);
+            return "SELECT * FROM Timer " + buildWhereQuery(model);
         } else if (model instanceof Chat) {
-            return "SELECT * FROM Chat" + buildWhereQuery(model);
+            return "SELECT * FROM Chat " + buildWhereQuery(model);
         } else if (model instanceof Message) {
-            return "SELECT * FROM Message" + buildWhereQuery(model);
+            return "SELECT * FROM Message " + buildWhereQuery(model);
         } else {
             return null;
         }
@@ -177,33 +177,33 @@ public class QueryBuilder {
     }
 
     private String buildUpdateServiceQuery(Service service) {
-        return "UPDATE Service SET URL = '" + service.getURL() + "', Localization = '" + service.getLocalization() + "' WHERE ServiceID = " + service.getID();
+        return "UPDATE Service SET URL = '" + service.getURL() + "', Localization = '" + service.getLocalization() + "' WHERE ID = ?";
     }
 
     private String buildUpdateRoomQuery(Room room) {
-        return "UPDATE Room SET Owner = " + room.getOwner() + ", GameStage = '" + room.getGameStage() + "', Timer = " + room.getTimer() + ", Chat = " + room.getChat() + " WHERE RoomID = " + room.getID();
+        return "UPDATE Room SET Owner = " + room.getOwner() + ", GameStage = '" + room.getGameStage() + "', Timer = " + room.getTimer() + ", Chat = " + room.getChat() + " WHERE ID = ?";
     }
 
     private String buildUpdateUsersQuery(User user) {
-        return "UPDATE Users SET Login = '" + user.getLogin() + "', Name = '" + user.getName() + "', Status = " + user.getStatus() + ", Role = " + user.getRole() + " WHERE UserID = " + user.getID();
+        return "UPDATE Users SET Login = '" + user.getLogin() + "', Name = '" + user.getName() + "', Status = " + user.getStatus() + ", Role = " + user.getRole() + " WHERE ID = ?";
     }
 
     private String buildUpdateStatusQuery(Status status) {
-        return "UPDATE Status SET IsAlive = " + (status.isAlive() ? 1 : 0) + " WHERE StatusID = " + status.getID();
+        return "UPDATE Status SET IsAlive = " + (status.isAlive() ? 1 : 0) + " WHERE StatusID = ?";
     }
 
     private String buildUpdateRoleQuery(Role role) {
-        return "UPDATE Role SET Name = '" + role.getName() + "', Description = '" + role.getDescription() + "', Health = " + role.getHealth() + ", Damage = " + role.getDamage() + ", WinCondition = '" + role.getWinCondition() + "' WHERE RoleID = " + role.getID();
+        return "UPDATE Role SET Name = '" + role.getName() + "', Description = '" + role.getDescription() + "', Health = " + role.getHealth() + ", Damage = " + role.getDamage() + ", WinCondition = '" + role.getWinCondition() + "' WHERE ID = ?";
     }
 
     private String buildUpdateTimerQuery(Timer timer) {
-        return "UPDATE Timer SET TriggerTime = " + timer.getTriggerTime() + ", CurrentTime = " + timer.getCurrentTime() + " WHERE TimerID = " + timer.getID();
+        return "UPDATE Timer SET TriggerTime = " + timer.getTriggerTime() + ", CurrentTime = " + timer.getCurrentTime() + " WHERE ID = ?";
     }
 
     private String buildUpdateChatQuery(Chat chat) {
         StringBuilder queryBuilder = new StringBuilder("UPDATE Chat SET ");
         queryBuilder.append("ID = ").append(chat.getID());
-        queryBuilder.append("WHERE ChatID = ").append(chat.getID());
+        queryBuilder.append("WHERE ChatID = ?");
         return queryBuilder.toString();
     }
 
@@ -212,7 +212,7 @@ public class QueryBuilder {
         queryBuilder.append("Sender = ").append(message.getSender()).append(", ");
         queryBuilder.append("SendTime = ").append(message.getSendTime()).append(", ");
         queryBuilder.append("MessageText = '").append(message.getMessageText()).append("' ");
-        queryBuilder.append("WHERE MessageID = ").append(message.getID());
+        queryBuilder.append("WHERE MessageID = ?");
         return queryBuilder.toString();
     }
 

@@ -70,8 +70,26 @@ public class MainForm extends JFrame {
 
                     contentPanel.setTableModel(tableModel);
                     }
-                else
-                    sqlProcessor.executeUpdate(query);
+                else if (contentPanel.getCrudMode() == CRUDMode.UPDATE) {
+                    String input = JOptionPane.showInputDialog(null, "Enter the ID:", "Enter ID", JOptionPane.PLAIN_MESSAGE);
+                    if (input != null && !input.isEmpty()) {
+                        try {
+                            int selectedID = Integer.parseInt(input.trim());
+                            preparedStatement.setInt(1, selectedID);
+                            int affectedRows = preparedStatement.executeUpdate();
+                            JOptionPane.showMessageDialog(null, "Affected rows: " + affectedRows, "SUCCESS", JOptionPane.OK_OPTION);
+
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No input provided. Please enter a valid number.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else {
+                    int affectedRows = sqlProcessor.executeUpdate(query);
+                    JOptionPane.showMessageDialog(null, "Affected rows: " + affectedRows, "SUCCESS", JOptionPane.OK_OPTION);
+                }
                 } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "SQL ERROR: " + ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
