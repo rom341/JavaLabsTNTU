@@ -35,226 +35,286 @@ public class QueryConfigurationTabbedPane extends JTabbedPane {
         chatSelectPanel = createSelectorChatPanel();
         messageSelectPanel = createSelectorMessagePanel();
     }
-    private JPanel createSelectorServicePanel(){
-        JPanel servicePanel = new JPanel();
+    private JPanel createSelectorServicePanel() {
+        JPanel servicePanel = new JPanel(new BorderLayout());
 
-        JLabel textFieldLabel = new JLabel();
-        textFieldLabel.setPreferredSize(new Dimension(300, 30));
-        textFieldLabel.setEnabled(false);
-        textFieldLabel.setOpaque(true);
-        servicePanel.add(textFieldLabel);
+        JPanel innerPanel = new JPanel();
+        servicePanel.add(innerPanel, BorderLayout.NORTH);
+        JButton execButton = new JButton();
+        execButton.setText("Create query");
+        innerPanel.add(execButton);
+
+        JTextField textFieldLabel = new JTextField();
+        textFieldLabel.setPreferredSize(new Dimension(850, 30));
+        textFieldLabel.setEditable(false);
+        innerPanel.add(textFieldLabel);
+
+        JPanel inputPanel = new JPanel();
+        servicePanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel urlLabel = new JLabel("URL:");
         JTextField urlTF = new JTextField();
         urlTF.setPreferredSize(new Dimension(300, 30));
-        servicePanel.add(urlLabel);
-        servicePanel.add(urlTF);
+        inputPanel.add(urlLabel);
+        inputPanel.add(urlTF);
 
         JLabel localLabel = new JLabel("Localization:");
         JTextField localTF = new JTextField();
         localTF.setPreferredSize(new Dimension(300, 30));
-        servicePanel.add(localLabel);
-        servicePanel.add(localTF);
+        inputPanel.add(localLabel);
+        inputPanel.add(localTF);
 
         return servicePanel;
     }
 
-    private JPanel createSelectorRoomPanel(){
-        JPanel roomPanel = new JPanel();
+    private JPanel createSelectorRoomPanel() {
+        JPanel roomPanel = new JPanel(new BorderLayout());
 
-        JLabel textFieldLabel = new JLabel();
-        textFieldLabel.setPreferredSize(new Dimension(300, 30));
-        textFieldLabel.setEnabled(false);
-        textFieldLabel.setOpaque(true);
-        roomPanel.add(textFieldLabel);
+        JPanel innerPanel = new JPanel();
+        roomPanel.add(innerPanel, BorderLayout.NORTH);
+        JButton execButton = new JButton();
+        execButton.setText("Create query");
+        innerPanel.add(execButton);
+
+        JTextField textFieldLabel = new JTextField();
+        textFieldLabel.setPreferredSize(new Dimension(850, 30));
+        textFieldLabel.setEditable(false);
+        innerPanel.add(textFieldLabel);
+
+        JPanel inputPanel = new JPanel();
+        roomPanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel ownerLabel = new JLabel("Owner:");
         JTextField ownerTF = new JTextField();
         ownerTF.setPreferredSize(new Dimension(300, 30));
-        roomPanel.add(ownerLabel);
-        roomPanel.add(ownerTF);
+        inputPanel.add(ownerLabel);
+        inputPanel.add(ownerTF);
 
         JLabel gameStageLabel = new JLabel("Game Stage:");
         JTextField gameStageTF = new JTextField();
         gameStageTF.setPreferredSize(new Dimension(300, 30));
-        roomPanel.add(gameStageLabel);
-        roomPanel.add(gameStageTF);
+        inputPanel.add(gameStageLabel);
+        inputPanel.add(gameStageTF);
 
         JLabel timerLabel = new JLabel("Timer:");
         JTextField timerTF = new JTextField();
         timerTF.setPreferredSize(new Dimension(300, 30));
-        roomPanel.add(timerLabel);
-        roomPanel.add(timerTF);
+        inputPanel.add(timerLabel);
+        inputPanel.add(timerTF);
 
         JLabel chatLabel = new JLabel("Chat:");
         JTextField chatTF = new JTextField();
         chatTF.setPreferredSize(new Dimension(300, 30));
-        roomPanel.add(chatLabel);
-        roomPanel.add(chatTF);
+        inputPanel.add(chatLabel);
+        inputPanel.add(chatTF);
 
         return roomPanel;
     }
 
-    private JPanel createSelectorUsersPanel(){
-        JPanel usersPanel = new JPanel();
+    private JPanel createSelectorUsersPanel() {
+        JPanel usersPanel = new JPanel(new BorderLayout());
 
-        JLabel textFieldLabel = new JLabel();
-        textFieldLabel.setPreferredSize(new Dimension(300, 30));
-        textFieldLabel.setEnabled(false);
-        textFieldLabel.setOpaque(true);
-        usersPanel.add(textFieldLabel);
+        JPanel innerPanel = new JPanel();
+        usersPanel.add(innerPanel, BorderLayout.NORTH);
+        JButton execButton = new JButton();
+        execButton.setText("Create query");
+        innerPanel.add(execButton);
+
+        JTextField textFieldLabel = new JTextField();
+        textFieldLabel.setPreferredSize(new Dimension(850, 30));
+        textFieldLabel.setEditable(false);
+        innerPanel.add(textFieldLabel);
+
+        JPanel inputPanel = new JPanel();
+        usersPanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel loginLabel = new JLabel("Login:");
         JTextField loginTF = new JTextField();
         loginTF.setPreferredSize(new Dimension(300, 30));
-        usersPanel.add(loginLabel);
-        usersPanel.add(loginTF);
+        inputPanel.add(loginLabel);
+        inputPanel.add(loginTF);
 
         JLabel nameLabel = new JLabel("Name:");
         JTextField nameTF = new JTextField();
         nameTF.setPreferredSize(new Dimension(300, 30));
-        usersPanel.add(nameLabel);
-        usersPanel.add(nameTF);
+        inputPanel.add(nameLabel);
+        inputPanel.add(nameTF);
 
         JLabel statusLabel = new JLabel("Status:");
         JTextField statusTF = new JTextField();
         statusTF.setPreferredSize(new Dimension(300, 30));
-        usersPanel.add(statusLabel);
-        usersPanel.add(statusTF);
+        inputPanel.add(statusLabel);
+        inputPanel.add(statusTF);
 
         JLabel roleLabel = new JLabel("Role:");
         JTextField roleTF = new JTextField();
         roleTF.setPreferredSize(new Dimension(300, 30));
-        usersPanel.add(roleLabel);
-        usersPanel.add(roleTF);
+        inputPanel.add(roleLabel);
+        inputPanel.add(roleTF);
 
         return usersPanel;
     }
 
-    private JPanel createSelectorStatusPanel(){
-        JPanel statusPanel = new JPanel();
+    private JPanel createSelectorStatusPanel() {
+        JPanel statusPanel = new JPanel(new BorderLayout());
 
-        JLabel textFieldLabel = new JLabel();
-        textFieldLabel.setPreferredSize(new Dimension(300, 30));
-        textFieldLabel.setEnabled(false);
-        textFieldLabel.setOpaque(true);
-        statusPanel.add(textFieldLabel);
+        JPanel innerPanel = new JPanel();
+        statusPanel.add(innerPanel, BorderLayout.NORTH);
+        JButton execButton = new JButton();
+        execButton.setText("Create query");
+        innerPanel.add(execButton);
+
+        JTextField textFieldLabel = new JTextField("");
+        textFieldLabel.setPreferredSize(new Dimension(850, 30));
+        textFieldLabel.setEditable(false);
+        innerPanel.add(textFieldLabel);
+
+        JPanel inputPanel = new JPanel();
+        statusPanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel isAliveLabel = new JLabel("Is Alive:");
         JTextField isAliveTF = new JTextField();
         isAliveTF.setPreferredSize(new Dimension(300, 30));
-        statusPanel.add(isAliveLabel);
-        statusPanel.add(isAliveTF);
+        inputPanel.add(isAliveLabel);
+        inputPanel.add(isAliveTF);
 
         return statusPanel;
     }
 
-    private JPanel createSelectorRolePanel(){
-        JPanel rolePanel = new JPanel();
+    private JPanel createSelectorRolePanel() {
+        JPanel rolePanel = new JPanel(new BorderLayout());
 
-        JLabel textFieldLabel = new JLabel();
-        textFieldLabel.setPreferredSize(new Dimension(300, 30));
-        textFieldLabel.setEnabled(false);
-        textFieldLabel.setOpaque(true);
-        rolePanel.add(textFieldLabel);
+        JPanel innerPanel = new JPanel();
+        rolePanel.add(innerPanel, BorderLayout.NORTH);
+        JButton execButton = new JButton();
+        execButton.setText("Create query");
+        innerPanel.add(execButton);
+
+        JTextField textFieldLabel = new JTextField("");
+        textFieldLabel.setPreferredSize(new Dimension(850, 30));
+        textFieldLabel.setEditable(false);
+        innerPanel.add(textFieldLabel);
+
+        JPanel inputPanel = new JPanel();
+        rolePanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel nameLabel = new JLabel("Name:");
         JTextField nameTF = new JTextField();
         nameTF.setPreferredSize(new Dimension(300, 30));
-        rolePanel.add(nameLabel);
-        rolePanel.add(nameTF);
+        inputPanel.add(nameLabel);
+        inputPanel.add(nameTF);
 
         JLabel descriptionLabel = new JLabel("Description:");
         JTextField descriptionTF = new JTextField();
         descriptionTF.setPreferredSize(new Dimension(300, 30));
-        rolePanel.add(descriptionLabel);
-        rolePanel.add(descriptionTF);
+        inputPanel.add(descriptionLabel);
+        inputPanel.add(descriptionTF);
 
         JLabel healthLabel = new JLabel("Health:");
         JTextField healthTF = new JTextField();
         healthTF.setPreferredSize(new Dimension(300, 30));
-        rolePanel.add(healthLabel);
-        rolePanel.add(healthTF);
+        inputPanel.add(healthLabel);
+        inputPanel.add(healthTF);
 
         JLabel damageLabel = new JLabel("Damage:");
         JTextField damageTF = new JTextField();
         damageTF.setPreferredSize(new Dimension(300, 30));
-        rolePanel.add(damageLabel);
-        rolePanel.add(damageTF);
+        inputPanel.add(damageLabel);
+        inputPanel.add(damageTF);
 
         JLabel winConditionLabel = new JLabel("Win Condition:");
         JTextField winConditionTF = new JTextField();
         winConditionTF.setPreferredSize(new Dimension(300, 30));
-        rolePanel.add(winConditionLabel);
-        rolePanel.add(winConditionTF);
+        inputPanel.add(winConditionLabel);
+        inputPanel.add(winConditionTF);
 
         return rolePanel;
     }
 
-    private JPanel createSelectorTimerPanel(){
-        JPanel timerPanel = new JPanel();
+    private JPanel createSelectorTimerPanel() {
+        JPanel timerPanel = new JPanel(new BorderLayout());
 
-        JLabel textFieldLabel = new JLabel();
-        textFieldLabel.setPreferredSize(new Dimension(300, 30));
-        textFieldLabel.setEnabled(false);
-        textFieldLabel.setOpaque(true);
-        timerPanel.add(textFieldLabel);
+        JPanel innerPanel = new JPanel();
+        timerPanel.add(innerPanel, BorderLayout.NORTH);
+        JButton execButton = new JButton();
+        execButton.setText("Create query");
+        innerPanel.add(execButton);
+
+        JTextField textFieldLabel = new JTextField("");
+        textFieldLabel.setPreferredSize(new Dimension(850, 30));
+        textFieldLabel.setEditable(false);
+        innerPanel.add(textFieldLabel);
+
+        JPanel inputPanel = new JPanel();
+        timerPanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel triggerTimeLabel = new JLabel("Trigger Time:");
         JTextField triggerTimeTF = new JTextField();
         triggerTimeTF.setPreferredSize(new Dimension(300, 30));
-        timerPanel.add(triggerTimeLabel);
-        timerPanel.add(triggerTimeTF);
+        inputPanel.add(triggerTimeLabel);
+        inputPanel.add(triggerTimeTF);
 
         JLabel currentTimeLabel = new JLabel("Current Time:");
         JTextField currentTimeTF = new JTextField();
         currentTimeTF.setPreferredSize(new Dimension(300, 30));
-        timerPanel.add(currentTimeLabel);
-        timerPanel.add(currentTimeTF);
+        inputPanel.add(currentTimeLabel);
+        inputPanel.add(currentTimeTF);
 
         return timerPanel;
     }
 
-    private JPanel createSelectorChatPanel(){
-        JPanel chatPanel = new JPanel();
+    private JPanel createSelectorChatPanel() {
+        JPanel chatPanel = new JPanel(new BorderLayout());
 
-        JLabel textFieldLabel = new JLabel();
-        textFieldLabel.setPreferredSize(new Dimension(300, 30));
-        textFieldLabel.setEnabled(false);
-        textFieldLabel.setOpaque(true);
-        chatPanel.add(textFieldLabel);
+        JPanel innerPanel = new JPanel();
+        chatPanel.add(innerPanel, BorderLayout.NORTH);
+        JButton execButton = new JButton();
+        execButton.setText("Create query");
+        innerPanel.add(execButton);
+
+        JTextField textFieldLabel = new JTextField("");
+        textFieldLabel.setPreferredSize(new Dimension(850, 30));
+        textFieldLabel.setEditable(false);
+        innerPanel.add(textFieldLabel);
 
         return chatPanel;
     }
 
-    private JPanel createSelectorMessagePanel(){
-        JPanel messagePanel = new JPanel();
+    private JPanel createSelectorMessagePanel() {
+        JPanel messagePanel = new JPanel(new BorderLayout());
 
-        JLabel textFieldLabel = new JLabel();
-        textFieldLabel.setPreferredSize(new Dimension(300, 30));
-        textFieldLabel.setEnabled(false);
-        textFieldLabel.setOpaque(true);
-        messagePanel.add(textFieldLabel);
+        JPanel innerPanel = new JPanel();
+        messagePanel.add(innerPanel, BorderLayout.NORTH);
+        JButton execButton = new JButton();
+        execButton.setText("Create query");
+        innerPanel.add(execButton);
+
+        JTextField textFieldLabel = new JTextField();
+        textFieldLabel.setPreferredSize(new Dimension(850, 30));
+        textFieldLabel.setEditable(false);
+        innerPanel.add(textFieldLabel);
+
+        JPanel inputPanel = new JPanel();
+        messagePanel.add(inputPanel, BorderLayout.CENTER);
 
         JLabel senderLabel = new JLabel("Sender:");
         JTextField senderTF = new JTextField();
         senderTF.setPreferredSize(new Dimension(300, 30));
-        messagePanel.add(senderLabel);
-        messagePanel.add(senderTF);
+        inputPanel.add(senderLabel);
+        inputPanel.add(senderTF);
 
         JLabel sendTimeLabel = new JLabel("Send Time:");
         JTextField sendTimeTF = new JTextField();
         sendTimeTF.setPreferredSize(new Dimension(300, 30));
-        messagePanel.add(sendTimeLabel);
-        messagePanel.add(sendTimeTF);
+        inputPanel.add(sendTimeLabel);
+        inputPanel.add(sendTimeTF);
 
         JLabel messageTextLabel = new JLabel("Message Text:");
         JTextField messageTextTF = new JTextField();
         messageTextTF.setPreferredSize(new Dimension(300, 30));
-        messagePanel.add(messageTextLabel);
-        messagePanel.add(messageTextTF);
+        inputPanel.add(messageTextLabel);
+        inputPanel.add(messageTextTF);
 
         return messagePanel;
     }
-
 }
