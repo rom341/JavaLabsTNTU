@@ -15,7 +15,7 @@ public class Launcher {
         SQLProcessor sqlProcessor = new SQLProcessor(connectionString);
         TableCreator tableCreator = new TableCreator(sqlProcessor);
 
-        //tableCreator.createAllTablesIfNotExists();
+        //tableCreator.recreateAllTables();
 
         SwingUtilities.invokeLater(() -> {
             MainForm app = new MainForm(sqlProcessor);

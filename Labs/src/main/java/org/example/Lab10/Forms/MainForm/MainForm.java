@@ -6,11 +6,8 @@ import org.example.Lab10.Database.SQLProcessor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class MainForm extends JFrame {
     private SQLProcessor sqlProcessor;
@@ -47,24 +44,26 @@ public class MainForm extends JFrame {
         queryTextField = new QueryTextField();
         contentPanel = new ContentPanel();
         executeButton = new ExecuteButton(e -> {
-            try {
-                String query = contentPanel.getQuery();
-                ResultSet result;
+            String query = contentPanel.getQuery();
 
+            try (Connection connection = sqlProcessor.getConnection(query);
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ){
                 if (contentPanel.getCrudMode() == CRUDMode.READ) {
-                    result = sqlProcessor.executeQuery(query);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
                     DefaultTableModel tableModel = new DefaultTableModel();
 
-                    ResultSetMetaData metaData = result.getMetaData();
-                    int columnCount = metaData.getColumnCount();
+                    int columnCount = resultSetMetaData.getColumnCount();
                     for (int column = 1; column <= columnCount; column++) {
-                        tableModel.addColumn(metaData.getColumnName(column));
+                        tableModel.addColumn(resultSetMetaData.getColumnName(column));
                     }
 
-                    while (result.next()) {
+                    while (resultSet.next()) {
                         Object[] row = new Object[columnCount];
                         for (int column = 1; column <= columnCount; column++) {
-                            row[column - 1] = result.getObject(column);
+                            row[column - 1] = resultSet.getObject(column);
                         }
                         tableModel.addRow(row);
                     }
@@ -74,7 +73,7 @@ public class MainForm extends JFrame {
                 else
                     sqlProcessor.executeUpdate(query);
                 } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                JOptionPane.showMessageDialog(null, "SQL ERROR: " + ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

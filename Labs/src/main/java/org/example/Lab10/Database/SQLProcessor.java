@@ -13,10 +13,15 @@ public class SQLProcessor {
         this.connectionString = connectionString;
     }
 
+    public Connection getConnection(String query) throws SQLException {
+        return DriverManager.getConnection(connectionString);
+    }
+
     // Method to execute a SELECT query and return the result set
     public ResultSet executeQuery(String query) throws SQLException {
         try (Connection connection = DriverManager.getConnection(connectionString);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
             return preparedStatement.executeQuery();
         }
     }

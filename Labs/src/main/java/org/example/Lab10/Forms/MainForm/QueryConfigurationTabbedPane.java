@@ -101,7 +101,7 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         JPanel inputPanel = new JPanel();
         roomPanel.add(inputPanel, BorderLayout.CENTER);
 
-        JLabel ownerLabel = new JLabel("Owner:");
+        JLabel ownerLabel = new JLabel("Owner ID:");
         JTextField ownerTF = new JTextField();
         ownerTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(ownerLabel);
@@ -110,13 +110,13 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         JComboBox<String> gameStageComboBox = new JComboBox<>(new String[]{"Morning", "Midday", "Evening", "Night"});
         inputPanel.add(gameStageComboBox);
 
-        JLabel timerLabel = new JLabel("Timer:");
+        JLabel timerLabel = new JLabel("Timer ID:");
         JTextField timerTF = new JTextField();
         timerTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(timerLabel);
         inputPanel.add(timerTF);
 
-        JLabel chatLabel = new JLabel("Chat:");
+        JLabel chatLabel = new JLabel("Chat ID:");
         JTextField chatTF = new JTextField();
         chatTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(chatLabel);
@@ -162,13 +162,13 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         inputPanel.add(nameLabel);
         inputPanel.add(nameTF);
 
-        JLabel statusLabel = new JLabel("Status:");
+        JLabel statusLabel = new JLabel("Status ID:");
         JTextField statusTF = new JTextField();
         statusTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(statusLabel);
         inputPanel.add(statusTF);
 
-        JLabel roleLabel = new JLabel("Role:");
+        JLabel roleLabel = new JLabel("Role ID:");
         JTextField roleTF = new JTextField();
         roleTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(roleLabel);
@@ -285,13 +285,13 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         JPanel inputPanel = new JPanel();
         timerPanel.add(inputPanel, BorderLayout.CENTER);
 
-        JLabel triggerTimeLabel = new JLabel("Trigger Time:");
+        JLabel triggerTimeLabel = new JLabel("Trigger Time (sec):");
         JTextField triggerTimeTF = new JTextField();
         triggerTimeTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(triggerTimeLabel);
         inputPanel.add(triggerTimeTF);
 
-        JLabel currentTimeLabel = new JLabel("Current Time:");
+        JLabel currentTimeLabel = new JLabel("Current Time (sec):");
         JTextField currentTimeTF = new JTextField();
         currentTimeTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(currentTimeLabel);
@@ -340,13 +340,13 @@ public class QueryConfigurationTabbedPane extends JTabbedPane implements QueryCr
         JPanel inputPanel = new JPanel();
         messagePanel.add(inputPanel, BorderLayout.CENTER);
 
-        JLabel senderLabel = new JLabel("Sender:");
+        JLabel senderLabel = new JLabel("Sender ID:");
         JTextField senderTF = new JTextField();
         senderTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(senderLabel);
         inputPanel.add(senderTF);
 
-        JLabel sendTimeLabel = new JLabel("Send Time:");
+        JLabel sendTimeLabel = new JLabel("Send Time (sec):");
         JTextField sendTimeTF = new JTextField();
         sendTimeTF.setPreferredSize(new Dimension(300, 30));
         inputPanel.add(sendTimeLabel);
