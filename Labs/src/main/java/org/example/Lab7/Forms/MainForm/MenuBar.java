@@ -3,11 +3,13 @@ package org.example.Lab7.Forms.MainForm;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MenuBar extends JMenuBar {
     private MainForm mainForm;
     private ResourceBundle bundle;
+
     public MenuBar(MainForm mainForm) {
         this.mainForm = mainForm;
         bundle = mainForm.localisation.getBundle();
@@ -39,7 +41,7 @@ public class MenuBar extends JMenuBar {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(mainForm,
                         bundle.getString("WhoCompleted") + "\n" +
-                        "Варіант 1");
+                                "Варіант 1");
             }
         });
 
@@ -56,5 +58,45 @@ public class MenuBar extends JMenuBar {
                 JOptionPane.showMessageDialog(mainForm, bundle.getString("ProgramDescription"));
             }
         });
+
+        // Language Selection Menu
+        JMenu languageMenu = new JMenu("Language");
+
+        JMenuItem azLangItem = new JMenuItem("Azerbaijani");
+        JMenuItem beLangItem = new JMenuItem("Belarusian");
+        JMenuItem csLangItem = new JMenuItem("Czech");
+        JMenuItem ukLangItem = new JMenuItem("Ukrainian");
+
+        languageMenu.add(azLangItem);
+        languageMenu.add(beLangItem);
+        languageMenu.add(csLangItem);
+        languageMenu.add(ukLangItem);
+
+        add(languageMenu);
+
+        azLangItem.addActionListener(s -> {
+            mainForm.localisation.setLanguage("az");
+            mainForm.localisation.setCountry("AZ");
+            mainForm.updateUI();
+        });
+
+        beLangItem.addActionListener(s -> {
+            mainForm.localisation.setLanguage("be");
+            mainForm.localisation.setCountry("BY");
+            mainForm.updateUI();
+        });
+
+        csLangItem.addActionListener(s -> {
+            mainForm.localisation.setLanguage("cs");
+            mainForm.localisation.setCountry("CZ");
+            mainForm.updateUI();
+        });
+
+        ukLangItem.addActionListener(s -> {
+            mainForm.localisation.setLanguage("uk");
+            mainForm.localisation.setCountry("UA");
+            mainForm.updateUI();
+        });
+
     }
 }

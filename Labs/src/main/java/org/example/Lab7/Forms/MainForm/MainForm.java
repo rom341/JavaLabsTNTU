@@ -45,8 +45,15 @@ public class MainForm extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         repaint();
     }
+    public void updateUI() {
+        // code to refresh the UI with new localization
+        SetToDefaultFormContent();
+        revalidate();
+        repaint();
+    }
     private void  SetToDefaultFormContent(){
         setJMenuBar(new MenuBar(this));
+        getContentPane().removeAll();
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(new ButtonPanel(this), BorderLayout.NORTH);
         getContentPane().add(new DrawingPanel(this), BorderLayout.CENTER);

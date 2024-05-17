@@ -5,7 +5,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LocalizationController {
-    private static final String BundleFilePath = "resource";
+    private static final String BundleFilePath = "Bundle";
 
     private String Language;
     private String Country;
@@ -16,7 +16,6 @@ public class LocalizationController {
         Language = language;
         SynchroniseLocalisation();
     }
-
     public void setCountry(String country) {
         Country = country;
         SynchroniseLocalisation();
